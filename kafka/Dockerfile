@@ -34,6 +34,9 @@ RUN java -version
 RUN wget http://apache.ip-connect.vn.ua/kafka/3.0.0/kafka_2.13-3.0.0.tgz
 RUN tar xzf kafka_2.13-3.0.0.tgz -C /kafka
 ENV KAFKA_HOME=/kafka/kafka_2.13-3.0.0
+COPY config/server0.properties /kafka/kafka_2.13-3.0.0/config
+COPY config/server1.properties /kafka/kafka_2.13-3.0.0/config
+COPY config/server2.properties /kafka/kafka_2.13-3.0.0/config
 
 # Install Maven 3.8.3
 RUN wget http://apache.ip-connect.vn.ua/maven/maven-3/3.8.3/binaries/apache-maven-3.8.3-bin.tar.gz
@@ -45,4 +48,4 @@ RUN update-alternatives --install /usr/bin/mvn mvn /opt/apache-maven-3.8.3/bin/m
 
 # Startup
 WORKDIR /kafka/bin
-ENTRYPOINT /kafka/bin/start_all.sh
+CMD /kafka/bin/start_all.sh
