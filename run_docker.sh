@@ -11,9 +11,9 @@ fi
 #Kafka port
 param=$param" -p 9092:9092"
 
-mode=/kafka/bin/start_all.sh
+mode=/kafka/cmd/start_all.sh
 if [ "$1" == cluster ]; then
-  mode=/kafka/bin/start_cluster.sh
+  mode=/kafka/cmd/start_cluster.sh
   # Mount volumes for kafka cluster
   param=$param" -v kafka_logs0:/tmp/kafka-logs0 -v kafka_logs1:/tmp/kafka-logs1 -v kafka_logs2:/tmp/kafka-logs2"
 

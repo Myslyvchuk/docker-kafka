@@ -13,7 +13,7 @@ RUN sed -i 's/^# *\(en_US.UTF-8\)/\1/' /etc/locale.gen && locale-gen
 RUN mkdir /kafka
 
 # Copy scripts
-COPY cmd/* /kafka/bin/
+COPY cmd/* /kafka/cmd/
 
 # Install Java11
 #RUN apt-get update -y && apt-get install software-properties-common -y
@@ -31,21 +31,21 @@ RUN echo export PATH=$PATH:$JAVA_HOME/bin >> /etc/environment
 RUN java -version
 
 # Install Kafka
-RUN wget http://apache.ip-connect.vn.ua/kafka/3.0.0/kafka_2.13-3.0.0.tgz
-RUN tar xzf kafka_2.13-3.0.0.tgz -C /kafka
-ENV KAFKA_HOME=/kafka/kafka_2.13-3.0.0
-COPY config/server0.properties /kafka/kafka_2.13-3.0.0/config
-COPY config/server1.properties /kafka/kafka_2.13-3.0.0/config
-COPY config/server2.properties /kafka/kafka_2.13-3.0.0/config
+RUN wget http://apache.ip-connect.vn.ua/kafka/3.2.1/kafka_2.13-3.2.1.tgz
+RUN tar xzf kafka_2.13-3.2.1.tgz -C /kafka
+ENV KAFKA_HOME=/kafka/kafka_2.13-3.2.1
+COPY config/server0.properties /kafka/kafka_2.13-3.2.1/config
+COPY config/server1.properties /kafka/kafka_2.13-3.2.1/config
+COPY config/server2.properties /kafka/kafka_2.13-3.2.1/config
 
 # Install Maven 3.8.3
-RUN wget http://apache.ip-connect.vn.ua/maven/maven-3/3.8.4/binaries/apache-maven-3.8.4-bin.tar.gz
-RUN tar -xf apache-maven-3.8.4-bin.tar.gz -C /opt/
-ENV MAVEN_HOME=/opt/apache-maven-3.8.4
+RUN wget http://apache.ip-connect.vn.ua/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz
+RUN tar -xf apache-maven-3.8.6-bin.tar.gz -C /opt/
+ENV MAVEN_HOME=/opt/apache-maven-3.8.6
 ENV PATH=$PATH:$MAVEN_HOME/bin
 RUN echo export PATH=$PATH:$MAVEN_HOME/bin >> /etc/environment
-RUN update-alternatives --install /usr/bin/mvn mvn /opt/apache-maven-3.8.4/bin/mvn 99
+RUN update-alternatives --install /usr/bin/mvn mvn /opt/apache-maven-3.8.6/bin/mvn 99
 
 # Startup
-WORKDIR /kafka/bin
-CMD /kafka/bin/start_all.sh
+WORKDIR /kafka/cmd
+CMD /kafka/cmd/start_all.sh
